@@ -1,52 +1,25 @@
-FROM continuumio/miniconda3
+ARG baseref="cleyrop/codatalab-muss-base"
+ARG version="0.0.1"
+ARG modelen="cleyrop/codatalab-muss-model-en"
+ARG modeles="cleyrop/codatalab-muss-model-es"
+ARG modelfr="cleyrop/codatalab-muss-model-fr"
 
-RUN apt-get update -qq \
-    && apt-get install -yqq --no-install-recommends \
-        git \
-        openssh-server \
-        net-tools iputils-ping nano acl \
-        gcc g++ \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/bin/python3 /usr/bin/python \
-    && conda create -n muss python=3.7 -y
+FROM $modelen:$version as EN
+FROM $modeles:$version as ES
+FROM $modelfr:$version as FR
 
-COPY resources/ssh_config /etc/ssh/ssh_config
-COPY resources/sshd_config /etc/ssh/sshd_config
+FROM $baseref:$version AS base
 
-RUN useradd -ms /bin/bash codatalab \
-    && echo codatalab:test | chpasswd \
-    && service ssh start \
-    && ssh-keygen -A \
-    && setfacl -Rm u:codatalab:r-x /etc/ssh \
-    && setfacl -m u:codatalab:r-x /etc/passwd \
-    && setfacl -m u:codatalab:r-x /etc/shadow
+COPY --from=EN /home/codatalab/.local/lib/python3.7/site-packages/en_core_web_md /home/codatalab/.local/lib/python3.7/site-packages/en_core_web_md
+COPY --from=EN /home/codatalab/.local/lib/python3.7/site-packages/en_core_web_md-2.3.1.dist-info /home/codatalab/.local/lib/python3.7/site-packages/en_core_web_md-2.3.1.dist-info
 
-USER codatalab
-WORKDIR /home/codatalab
+COPY --from=ES /home/codatalab/.local/lib/python3.7/site-packages/es_core_news_md /home/codatalab/.local/lib/python3.7/site-packages/es_core_news_md
+COPY --from=ES /home/codatalab/.local/lib/python3.7/site-packages/es_core_news_md-2.3.1.dist-info /home/codatalab/.local/lib/python3.7/site-packages/es_core_news_md-2.3.1.dist-info
 
-# FIXED bashrc skipping if ran non interactively causing conda ativate to fail 
-# TMP fix processing.py waiting for the issue to be solved by this MR : 
-RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia \
-    && rm -rf muss/.git* \
-    && conda init bash \
-    && sed -i '/# If not running interactively/,+5d' ~/.bashrc \
-    && echo 'conda activate muss' >> ~/.bashrc \
-    && echo 'cd muss' >> ~/.bashrc \
-    && . ~/.bashrc \
-    && pip install -r requirements.txt \
-    && pip install -e .
+COPY --from=FR /home/codatalab/.local/lib/python3.7/site-packages/fr_core_news_md /home/codatalab/.local/lib/python3.7/site-packages/fr_core_news_md
+COPY --from=FR /home/codatalab/.local/lib/python3.7/site-packages/fr_core_news_md-2.3.0.dist-info /home/codatalab/.local/lib/python3.7/site-packages/fr_core_news_md-2.3.0.dist-info
 
-RUN . ~/.bashrc \ 
-    && pip freeze | grep spacy \
-    && python -m spacy download fr_core_news_md \
-    && chown -R codatalab /home/codatalab
-
-RUN . ~/.bashrc \ 
-    && python -m spacy download es_core_news_md
-
-RUN . ~/.bashrc \ 
-    && python -m spacy download en_core_web_md
+#RUN chown -R codatalab /home/codatalab
 
 EXPOSE 22
 COPY resources/entrypoint /entrypoint

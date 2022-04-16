@@ -1,0 +1,8 @@
+ARG baseref=cleyrop/codatalab-muss-base
+ARG version=0.0.1
+
+FROM $baseref:$version
+
+RUN . ~/.bashrc \ 
+    && python -m spacy download fr_core_news_md
+
