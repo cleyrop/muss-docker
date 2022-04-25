@@ -13,14 +13,12 @@ RUN apt-get update -qq \
 WORKDIR ${homedir}/${user}
 USER ${user}
 
-RUN wget -q https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.fr.300.vec.gz \
-    && gzip -d cc.fr.300.vec.gz \
-    && wget -q https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.vec.gz \
-    && gzip -d cc.en.300.vec.gz \
-    && pip install --no-cache-dir 'spacy<3' \
-    && python -m spacy download en_core_web_md \
-    && python -m spacy download es_core_news_md \
-    && python -m spacy download fr_core_news_md
+RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_en_mined.tar.gz \
+    && gzip -d muss_en_mined.tar.gz \
+    && wget -q https://dl.fbaipublicfiles.com/muss/muss_fr_mined.tar.gz \
+    && gzip -d muss_fr_mined.tar.gz \
+    && wget -q https://dl.fbaipublicfiles.com/muss/muss_es_mined.tar.gz \
+    && gzip -d muss_es_mined.tar.gz
 
 
 
@@ -78,8 +76,12 @@ RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia
     && . ~/.bashrc \
     && pip install -r requirements.txt \
     && pip install -e .
-COPY --from=builder ${homedir}/${user}/.local ${homedir}/${user}/.local
 
+COPY --from=builder ${homedir}/${user}/muss_en_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_en_mined.tar.gz
+COPY --from=builder ${homedir}/${user}/muss_fr_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_fr_mined.tar.gz
+COPY --from=builder ${homedir}/${user}/muss_es_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_es_mined.tar.gz
+
+COPY --from=builder ${homedir}/${user}/.local ${homedir}/${user}/.local
 
 RUN . ~/.bashrc \ 
     && pip freeze | grep spacy
