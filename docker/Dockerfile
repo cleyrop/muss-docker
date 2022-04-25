@@ -21,9 +21,9 @@ RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_fr_mined.tar.gz
 RUN ls -al
 RUN tar zxf muss_fr_mined.tar.gz
 RUN ls -al
-RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_es_mined.tar.gz
-RUN ls -al
-RUN tar zxf muss_es_mined.tar.gz
+# RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_es_mined.tar.gz
+# RUN ls -al
+# RUN tar zxf muss_es_mined.tar.gz
 
 
 
