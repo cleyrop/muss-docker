@@ -18,7 +18,7 @@ RUN ls -al
 RUN mkdir muss_en_mined
 RUN tar zxf muss_en_mined.tar.gz --directory muss_en_mined
 RUN ls -al muss_en_mined
-RUN mv muss_en_mined/* muss_en_mined/
+RUN mv muss_en_mined/tmpur8jggas/* muss_en_mined/
 RUN ls -al
 RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_fr_mined.tar.gz
 RUN ls -al
