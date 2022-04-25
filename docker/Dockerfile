@@ -82,9 +82,9 @@ RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia
     && pip install -r requirements.txt \
     && pip install -e .
 
-COPY --from=builder ${homedir}/${user}/muss_en_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_en_mined.tar.gz
-COPY --from=builder ${homedir}/${user}/muss_fr_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_fr_mined.tar.gz
-COPY --from=builder ${homedir}/${user}/muss_es_mined.tar.gz ${homedir}/${user}/capfalcnlp/resources/models/muss_es_mined.tar.gz
+COPY --from=builder ${homedir}/${user}/muss_en_mined ${homedir}/${user}/capfalcnlp/resources/models/muss_en_mined
+COPY --from=builder ${homedir}/${user}/muss_fr_mined ${homedir}/${user}/capfalcnlp/resources/models/muss_fr_mined
+# COPY --from=builder ${homedir}/${user}/muss_es_mined ${homedir}/${user}/capfalcnlp/resources/models/muss_es_mined
 
 COPY --from=builder ${homedir}/${user}/.local ${homedir}/${user}/.local
 
