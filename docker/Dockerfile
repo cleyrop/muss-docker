@@ -14,11 +14,11 @@ WORKDIR ${homedir}/${user}
 USER ${user}
 
 RUN wget -q https://dl.fbaipublicfiles.com/muss/muss_en_mined.tar.gz \
-    && gzip -d muss_en_mined.tar.gz \
+    && tar zxf muss_en_mined.tar.gz \
     && wget -q https://dl.fbaipublicfiles.com/muss/muss_fr_mined.tar.gz \
-    && gzip -d muss_fr_mined.tar.gz \
+    && tar zxf muss_fr_mined.tar.gz \
     && wget -q https://dl.fbaipublicfiles.com/muss/muss_es_mined.tar.gz \
-    && gzip -d muss_es_mined.tar.gz
+    && tar zxf muss_es_mined.tar.gz
 
 
 
