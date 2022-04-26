@@ -7,7 +7,8 @@ conda activate muss
 
 cd ~/muss
 pip install -r requirements.txt
-pip install -e .
+pip install --no-cache-dir -e .
+
 printf "\n\033[0;44m---> Starting the SSH server.\033[0m\n"
 
 /usr/sbin/sshd -D -f /opt/ssh/sshd_config
