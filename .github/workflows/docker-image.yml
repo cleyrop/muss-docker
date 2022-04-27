@@ -37,3 +37,17 @@ jobs:
         build-args: |
           user=${{ secrets.USER_NAME }}
           password=${{ secrets.USER_PASSWORD }}
+
+    - name: Build and push GPU
+      uses: docker/build-push-action@v2
+      with:
+        context: ./docker
+        file: ./docker/Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:latest-gpu
+        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-gpu
+        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-gpu,mode=max
+        build-args: |
+          user=${{ secrets.USER_NAME }}
+          password=${{ secrets.USER_PASSWORD }}
