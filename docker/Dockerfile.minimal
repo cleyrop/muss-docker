@@ -6,12 +6,12 @@ RUN apt-get update -qq \
         gcc g++ nano cython3 \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/bin/python3 /usr/bin/python \
-    && conda create -n muss python=3.7 cudatoolkit cudnn -y \
+    && ln -s /usr/bin/python3 /usr/bin/python
 
 ENV PATH /opt/conda/bin:/home/muss/.local/bin:$PATH
 
-RUN useradd --home /home/muss --create-home --shell /bin/bash muss
+RUN useradd --home /home/muss --create-home --shell /bin/bash muss \
+    && conda create -n muss python=3.7 cudatoolkit cudnn -y
 
 USER muss
 WORKDIR /home/muss
