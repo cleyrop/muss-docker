@@ -2,8 +2,8 @@
 
 printf "\n\033[0;44m---> Init the environment.\033[0m\n"
 
-mkdir -p ~/muss/resources/models
-cd ~/muss/resources/models
+mkdir -p /home/muss/muss/resources/models
+cd /home/muss/muss/resources/models
 printf "\n\033[0;44m---> Downloading muss_fr_mined...\033[0m\n"
 wget -q https://dl.fbaipublicfiles.com/muss/muss_fr_mined.tar.gz
 tar zxf muss_fr_mined.tar.gz
@@ -28,7 +28,7 @@ cd ~/
 eval "$(conda shell.bash hook)"
 conda activate muss
 
-cd ~/muss
+cd /home/muss/muss
 # Fixing installation error of git dependencies
 sed -i 's/git+git/git+https/' requirements.txt
 pip install -r requirements.txt
