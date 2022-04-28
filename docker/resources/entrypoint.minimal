@@ -2,6 +2,9 @@
 
 printf "\n\033[0;44m---> Init the environment.\033[0m\n"
 
+pwd
+ls -al
+
 mkdir -p /home/muss/muss/resources/models
 cd /home/muss/muss/resources/models
 printf "\n\033[0;44m---> Downloading muss_fr_mined...\033[0m\n"
@@ -15,8 +18,8 @@ printf "\n\033[0;44m---> Downloading cc.fr.300.vec...\033[0m\n"
 wget -q https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.fr.300.vec.gz
 gzip -d cc.fr.300.vec.gz
 
-mkdir ~/.local/lib/python3.7/site-packages
-cd ~/.local/lib/python3.7/site-packages
+mkdir /home/muss/.local/lib/python3.7/site-packages
+cd /home/muss/.local/lib/python3.7/site-packages
 
 printf "\n\033[0;44m---> Downloading fr_core_news_md...\033[0m\n"
 wget https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-2.3.0/fr_core_news_md-2.3.0.tar.gz

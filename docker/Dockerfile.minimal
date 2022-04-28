@@ -11,6 +11,7 @@ RUN apt-get update -qq \
 ENV PATH /opt/conda/bin:/home/muss/.local/bin:$PATH
 
 RUN useradd --home /home/muss --create-home --shell /bin/bash muss \
+    && chown -R ${user}:${user} ${homedir}/${user} \
     && conda create -n muss python=3.7 cudatoolkit cudnn -y
 
 USER muss
