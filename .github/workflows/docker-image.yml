@@ -51,3 +51,15 @@ jobs:
         build-args: |
           user=${{ secrets.USER_NAME }}
           password=${{ secrets.USER_PASSWORD }}
+
+    
+    - name: Build and push minimal GPU
+      uses: docker/build-push-action@v2
+      with:
+        context: ./docker
+        file: ./docker/Dockerfile.minimal
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:minimal-gpu
+        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-minimal-gpu
+        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-minimal-gpu,mode=max
