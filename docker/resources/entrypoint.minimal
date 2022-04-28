@@ -30,7 +30,7 @@ conda activate muss
 
 cd /home/muss/muss
 # Fixing installation error of git dependencies
-sed -i 's/git+git/git+https/' requirements.txt
+sed -i'' 's/git+git/git+https/' requirements.txt
 cat requirements.txt
 
 pip install -r requirements.txt
