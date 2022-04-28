@@ -23,7 +23,7 @@ wget https://github.com/explosion/spacy-models/releases/download/fr_core_news_md
 tar zxf fr_core_news_md-2.3.0.tar.gz --strip 1 fr_core_news_md-2.3.0/fr_core_news_md fr_core_news_md-2.3.0/fr_core_news_md.egg-info
 rm fr_core_news_md-2.3.0.tar.gz
 
-cd ~/
+cd /home/muss
 
 eval "$(conda shell.bash hook)"
 conda activate muss
@@ -31,6 +31,8 @@ conda activate muss
 cd /home/muss/muss
 # Fixing installation error of git dependencies
 sed -i 's/git+git/git+https/' requirements.txt
+cat requirements.txt
+
 pip install -r requirements.txt
 pip install -e .
 
