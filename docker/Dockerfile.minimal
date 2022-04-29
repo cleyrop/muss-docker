@@ -19,7 +19,10 @@ USER muss
 WORKDIR /home/muss
 
 RUN git clone --quiet --depth 1 https://github.com/facebookresearch/muss.git -b main \
-    && rm -rf muss/.git* \
+    && cd mus \
+    && sed -i 's/git+git/git+https/g' requirements.txt \
+    && rm -rf .git* \
+    && cd .. \
     && conda init bash \
     && sed -i '/# If not running interactively/,+5d' ~/.bashrc \
     && echo 'conda activate muss' >> ~/.bashrc \
