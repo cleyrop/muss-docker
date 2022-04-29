@@ -38,4 +38,6 @@ cd /home/muss/muss
 pip install -r requirements.txt
 pip install -e .
 
-exec "$@"
+echo "exec args: " "$@"
+
+tail -f /dev/null
