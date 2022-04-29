@@ -19,7 +19,7 @@ USER muss
 WORKDIR /home/muss
 
 RUN git clone --quiet --depth 1 https://github.com/facebookresearch/muss.git -b main \
-    && cd mus \
+    && cd muss \
     && sed -i 's/git+git/git+https/g' requirements.txt \
     && rm -rf .git* \
     && cd .. \
