@@ -12,7 +12,7 @@ ENV PATH /opt/conda/bin:$PATH
 
 RUN conda create -n muss python=3.7 cudatoolkit cudnn -y \
     \
-    && useradd --home /home/muss --create-home --shell /bin/bash muss \
+    && useradd --home /home/muss --create-home --shell /bin/bash --uid 2001 muss \
     && chown -R muss:muss /home/muss
 
 USER muss
