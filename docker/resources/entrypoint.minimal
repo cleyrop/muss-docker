@@ -2,9 +2,6 @@
 
 printf "\n\033[0;44m---> Init the environment.\033[0m\n"
 
-pwd
-ls -al
-
 mkdir -p /home/muss/muss/resources/models
 cd /home/muss/muss/resources/models
 printf "\n\033[0;44m---> Downloading muss_fr_mined...\033[0m\n"
@@ -33,10 +30,10 @@ conda activate muss
 
 cd /home/muss/muss
 # Fixing installation error of git dependencies
-sed -i'' 's/git+git/git+https/' requirements.txt
+sed -i 's/git+git/git+https/g' requirements.txt
 cat requirements.txt
 
 pip install -r requirements.txt
-pip install -e .
+pip install --no-cache-dir -e .
 
 exec "$@"

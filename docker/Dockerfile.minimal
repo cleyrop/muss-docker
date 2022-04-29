@@ -3,16 +3,17 @@ FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime
 RUN apt-get update -qq \
     && apt-get install -yqq --no-install-recommends \
         git wget nvidia-utils-440 \
-        gcc g++ nano cython3 \
+        gcc g++ nano \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python
 
-ENV PATH /opt/conda/bin:/home/muss/.local/bin:$PATH
+ENV PATH /opt/conda/bin:$PATH
 
-RUN useradd --home /home/muss --create-home --shell /bin/bash muss \
-    && chown -R muss:muss /home/muss \
-    && conda create -n muss python=3.7 cudatoolkit cudnn -y
+RUN conda create -n muss python=3.7 cudatoolkit cudnn -y \
+    \
+    && useradd --home /home/muss --create-home --shell /bin/bash muss \
+    && chown -R muss:muss /home/muss
 
 USER muss
 WORKDIR /home/muss
