@@ -46,8 +46,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:latest-gpu
-        cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-gpu
-        cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:buildcache-gpu,mode=max
+        no-cache: true
         build-args: |
           user=${{ secrets.USER_NAME }}
           password=${{ secrets.USER_PASSWORD }}
