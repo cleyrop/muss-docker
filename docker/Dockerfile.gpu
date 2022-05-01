@@ -36,7 +36,7 @@ RUN conda create -n muss python=3.7 cudatoolkit cudnn -y \
     && cp /etc/ssh/sshd_config /opt/ssh/ \
     && sed -i -E 's:#?HostKey /etc:HostKey /opt:' /opt/ssh/sshd_config \
     && sed -i -E 's/#?PasswordAuthentication yes/PasswordAuthentication yes/' /opt/ssh/sshd_config \
-    && sed -i -E 's/#?PidFile \/var\/run\/sshd\.pid/PidFile \/var\/local\/run\/sshd.pid' /opt/ssh/sshd_config \
+    && echo 'PidFile /var/local/run/sshd.pid' >> /opt/ssh/sshd_config \
     && echo 'Port 2222' >> /opt/ssh/sshd_config \
     && chmod 700 /opt/ssh \
     && chmod 600 /opt/ssh/* \
