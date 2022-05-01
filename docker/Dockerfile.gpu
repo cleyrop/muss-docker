@@ -66,4 +66,4 @@ RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia
 EXPOSE 2222
 COPY resources/entrypoint /entrypoint
 ENTRYPOINT ["/entrypoint"]
-# CMD tail -f /dev/null
+CMD tail -f /dev/null
