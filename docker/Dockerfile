@@ -13,7 +13,7 @@ RUN apt-get update -qq \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
-    && conda create -n muss python=3.7 -y \
+    && conda create -n muss python=3.7 gunicorn -y \
     \
     && mkdir -p ${homedir}/${user}/.ssh \
     && mkdir -p ${homedir}/${user}/input-files \
@@ -42,7 +42,7 @@ WORKDIR ${homedir}/${user}
 
 # FIXED bashrc skipping if ran non interactively causing conda ativate to fail 
 # TMP fix processing.py waiting for the issue to be solved by this MR : 
-RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia \
+RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b chore/model_loading \
     && rm -rf muss/.git* \
     && conda init bash \
     && sed -i '/# If not running interactively/,+5d' ~/.bashrc \
@@ -52,7 +52,12 @@ RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia
     && echo '  . ~/.bashrc' >> ~/.bash_profile \
     && echo 'fi' >> ~/.bash_profile
 
+ENV FLASK_APP=ia
+ENV FLASK_ENV=production
+ENV TMPDIR=${homedir}/${user}/input-files
+
 EXPOSE 2222
+COPY --chown=${user} resources/gunicorn.conf.py /usr/local/etc/
 COPY resources/entrypoint /entrypoint
 ENTRYPOINT ["/entrypoint"]
 CMD tail -f /dev/null
