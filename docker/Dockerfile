@@ -4,13 +4,15 @@ ARG user=codatalab
 ARG password=test
 ARG homedir=/home
 
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
 RUN apt-get update -qq \
     && apt-get install -yqq --no-install-recommends \
         git \
         openssh-server \
         net-tools iputils-ping nano acl \
         gcc g++ \
-    && update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
