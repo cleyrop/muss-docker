@@ -4,17 +4,16 @@ ARG user=codatalab
 ARG password=test
 ARG homedir=/home
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-
 RUN apt-get update -qq \
     && apt-get install -yqq --no-install-recommends \
         git \
         openssh-server \
         net-tools iputils-ping nano acl \
         gcc g++ \
+        locales language-pack-fr \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
+    && locale-gen "en_US.UTF-8" \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && conda create -n muss python=3.7 gunicorn -y \
     \
