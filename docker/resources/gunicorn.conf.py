@@ -6,3 +6,4 @@ threads = 1
 daemon = True
 chdir = "scripts"
 reload = True
+timeout = 120
