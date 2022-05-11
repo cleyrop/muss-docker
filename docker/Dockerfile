@@ -10,6 +10,7 @@ RUN apt-get update -qq \
         openssh-server \
         net-tools iputils-ping nano acl \
         gcc g++ \
+    && update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
