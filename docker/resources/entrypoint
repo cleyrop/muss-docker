@@ -13,9 +13,9 @@ printf "\n\033[0;44m---> Starting the gunicorn server.\033[0m\n"
 
 gunicorn --config /usr/local/etc/gunicorn.conf.py ia:app
 
-cp ~/muss/scripts/example.fr ~/input-files/
+cp ~/muss/scripts/examples.fr ~/input-files/
 python ~/muss/scripts/simplify.py ~/input-files/examples.fr --model-name muss_fr_mined
-rm ~/input-files/example.fr
+rm ~/input-files/examples.fr
 
 
 printf "\n\033[0;44m---> Starting the SSH server.\033[0m\n"
