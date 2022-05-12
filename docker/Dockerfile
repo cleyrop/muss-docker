@@ -13,7 +13,6 @@ RUN apt-get update -qq \
         locales language-pack-fr \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
-    && locale-gen "en_US.UTF-8" \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && conda create -n muss python=3.7 gunicorn -y \
     \
