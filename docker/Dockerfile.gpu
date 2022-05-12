@@ -14,7 +14,7 @@ RUN apt-get update -qq \
         openssh-server \
         net-tools iputils-ping nano acl \
         gcc g++ \
-        locales language-pack-en \
+        locales \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
