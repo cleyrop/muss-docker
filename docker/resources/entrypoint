@@ -1,7 +1,25 @@
 #!/bin/bash
- 
+
+printf "\n\033[0;44m---> Init the environment.\033[0m\n"
+
+eval "$(conda shell.bash hook)"
+conda activate muss
+
+cd ~/muss
+pip install -r requirements.txt
+pip install --no-cache-dir -e .
+
+printf "\n\033[0;44m---> Starting the gunicorn server.\033[0m\n"
+
+gunicorn --config /usr/local/etc/gunicorn.conf.py ia:app
+
+cp ~/muss/scripts/examples.fr ~/input-files/
+python ~/muss/scripts/simplify.py ~/input-files/examples.fr --model-name muss_fr_mined
+rm ~/input-files/examples.fr
+
+
 printf "\n\033[0;44m---> Starting the SSH server.\033[0m\n"
 
-/usr/sbin/sshd -D
+/usr/sbin/sshd -D -f /opt/ssh/sshd_config
  
-exec "$@"
+# exec "$@"
