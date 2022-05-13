@@ -3,8 +3,6 @@ name: Docker Image CI - preprod
 on:
   push:
     branches: [ preprod ]
-  pull_request:
-    branches: [ preprod ]
 
 jobs:
 
@@ -30,7 +28,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./docker
-        file: ./docker/Dockerfile.gpu
+        file: ./docker/Dockerfile
         builder: ${{ steps.buildx.outputs.name }}
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/codatalab-muss:next
