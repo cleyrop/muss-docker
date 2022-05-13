@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime
 
 ARG user=codatalab
 ARG password=test
@@ -6,7 +6,7 @@ ARG homedir=/home
 
 RUN apt-get update -qq \
     && apt-get install -yqq --no-install-recommends \
-        git wget \
+        git wget nvidia-utils-440 \
         openssh-server \
         net-tools iputils-ping nano acl \
         gcc g++ \
@@ -16,7 +16,7 @@ RUN apt-get update -qq \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN conda create -n muss python=3.7 gunicorn -y \
+RUN conda create -n muss python=3.7 cudatoolkit cudnn gunicorn -y \
     \
     && mkdir -p ${homedir}/${user}/.ssh \
     && mkdir -p ${homedir}/${user}/input-files \
@@ -66,4 +66,4 @@ EXPOSE 2222
 COPY --chown=${user} resources/gunicorn.conf.py /usr/local/etc/
 COPY resources/entrypoint /entrypoint
 ENTRYPOINT ["/entrypoint"]
-CMD tail -f /dev/null
+# CMD tail -f /dev/null
