@@ -48,7 +48,7 @@ WORKDIR ${homedir}/${user}
 
 # FIXED bashrc skipping if ran non interactively causing conda ativate to fail 
 # TMP fix processing.py waiting for the issue to be solved by this MR : 
-RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b chore/model_loading \
+RUN git clone --quiet --depth 1 https://github.com/cleyrop/muss.git -b unapei-ia \
     && rm -rf muss/.git* \
     && conda init bash \
     && sed -i '/# If not running interactively/,+5d' ~/.bashrc \
@@ -65,9 +65,5 @@ ENV TMPDIR=${homedir}/${user}/input-files
 EXPOSE 2222
 COPY --chown=${user} resources/gunicorn.conf.py /usr/local/etc/
 COPY resources/entrypoint /entrypoint
-
-HEALTHCHECK --interval=30s --timeout=30s --retries=5 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8000/healthcheck || exit 1
-
 ENTRYPOINT ["/entrypoint"]
 # CMD tail -f /dev/null
